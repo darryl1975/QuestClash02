@@ -1,0 +1,30 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count multiple-select question(s) based only on the source text above. A
+multiple-select question has more than one correct option among the choices.
+
+Authoring rules:
+- Each question must have between 4 and 6 answer options.
+- At least 1 and at most (number of options - 1) options are correct — never mark every option
+  correct ("select all that apply" answers are not allowed).
+- Options must not be near-duplicates of each other and must not repeat the question's wording.
+- "correct_indices" lists the zero-based indices into "options" that are correct, in ascending order.
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string - the question text",
+      "options": ["string", "string", "string", "string"],
+      "correct_indices": [0, 2],
+      "explanation": "string - brief reason those options are correct"
+    }
+  ]
+}
+<!-- SCHEMA END -->

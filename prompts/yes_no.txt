@@ -1,0 +1,27 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count yes/no question(s) based only on the source text above.
+
+Authoring rules:
+- "question" must be phrased as a genuine yes/no question (not a statement).
+- Mix questions whose correct answer is "yes" and questions whose correct answer is "no" — do not
+  make every answer the same.
+- "correct_answer" must be exactly the lowercase string "yes" or "no".
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string - the yes/no question",
+      "correct_answer": "yes",
+      "explanation": "string - brief reason for the answer"
+    }
+  ]
+}
+<!-- SCHEMA END -->

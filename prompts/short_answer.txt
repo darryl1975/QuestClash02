@@ -1,0 +1,30 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count short-answer question(s) based only on the source text above.
+
+Authoring rules:
+- "question" must require a free-text answer of a sentence or two — not a single word and not
+  yes/no.
+- "model_answer" is a reference answer (1-3 sentences) that a grader could compare a learner's
+  answer against.
+- "keywords" is an optional list of key terms that should appear in a correct answer — use an
+  empty list if there are none.
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string - the short-answer question",
+      "model_answer": "string - a reference answer, 1-3 sentences",
+      "keywords": ["string"],
+      "explanation": "string - optional extra context"
+    }
+  ]
+}
+<!-- SCHEMA END -->

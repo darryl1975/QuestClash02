@@ -1,0 +1,11 @@
+Your previous response had problems and cannot be used as-is:
+
+$error_list
+
+Return a corrected, COMPLETE JSON object with exactly $expected_count valid $question_type_label
+question(s), following this schema exactly (this replaces your entire previous answer, do not
+just patch individual fields):
+
+$schema_reminder
+
+Respond with ONLY the JSON object. No markdown code fences, no commentary.

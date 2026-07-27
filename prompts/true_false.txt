@@ -1,0 +1,27 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count true/false statement(s) based only on the source text above.
+
+Authoring rules:
+- "question" must be a single declarative statement (not phrased as a question) that is either
+  clearly true or clearly false according to the source text.
+- Mix true and false statements across the set — do not make every statement true.
+- "correct_answer" must be a literal JSON boolean (true or false), never a string.
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string - the statement to judge",
+      "correct_answer": true,
+      "explanation": "string - brief reason it is true or false"
+    }
+  ]
+}
+<!-- SCHEMA END -->

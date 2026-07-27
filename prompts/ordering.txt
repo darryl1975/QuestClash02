@@ -1,0 +1,31 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count ordering/sequence question(s) based only on the source text above. Each
+question asks the learner to arrange steps, events, or items into their correct order.
+
+Authoring rules:
+- "question" is the instruction, e.g. "Arrange the following steps in the correct order."
+- "items" is a list of 3 to 6 strings, presented in SHUFFLED (i.e. NOT already-correct) order.
+- "correct_order" is a list of zero-based indices into "items": correct_order[0] is the index of
+  the item that comes first in the true sequence, correct_order[1] is the index of the item that
+  comes second, and so on. It must be a permutation of every index in "items" (same length, each
+  index used exactly once).
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string - the ordering instruction",
+      "items": ["string", "string", "string"],
+      "correct_order": [2, 0, 1],
+      "explanation": "string - brief reason for the correct sequence"
+    }
+  ]
+}
+<!-- SCHEMA END -->

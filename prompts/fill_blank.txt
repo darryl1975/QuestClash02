@@ -1,0 +1,29 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count fill-in-the-blank question(s) based only on the source text above.
+
+Authoring rules:
+- "question" must contain the blank marker "____" (four underscores) exactly once, in the spot
+  where the missing word or short phrase belongs.
+- "correct_answer" is the exact word/phrase that fills the blank.
+- "acceptable_answers" is an optional list of other phrasings that should also be accepted
+  (spelling variants, synonyms) — use an empty list if there are none.
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string containing exactly one ____ blank marker",
+      "correct_answer": "string - the word or phrase that fills the blank",
+      "acceptable_answers": ["string"],
+      "explanation": "string - brief context for the answer"
+    }
+  ]
+}
+<!-- SCHEMA END -->

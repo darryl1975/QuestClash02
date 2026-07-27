@@ -1,0 +1,28 @@
+=== SOURCE TEXT ===
+$source_text
+=== END SOURCE TEXT ===
+
+Category: $category
+
+Write exactly $count multiple-choice question(s) based only on the source text above.
+
+Authoring rules:
+- Each question must have exactly $mc_option_count answer options.
+- Exactly one option is correct; the rest must be plausible but clearly wrong to someone who read the source text.
+- Options must not be near-duplicates of each other and must not repeat the question's wording.
+- "correct_index" is the zero-based index into "options" of the correct option.
+
+Respond with a single JSON object matching exactly this shape:
+
+<!-- SCHEMA START -->
+{
+  "questions": [
+    {
+      "question": "string - the question text",
+      "options": ["string", "string", "string", "string"],
+      "correct_index": 0,
+      "explanation": "string - brief reason the correct option is right"
+    }
+  ]
+}
+<!-- SCHEMA END -->

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuestClash</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h1>QuestClash</h1>
+  <p class="subtitle">Turn any document into a quiz with Ollama Cloud</p>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="create" onclick="switchTab('create')">Create Quiz</button>
+    <button class="tab-btn" data-tab="saved" onclick="switchTab('saved')">Saved Quizzes</button>
+  </div>
+</div>
+
+<!-- ══════════════════════ CREATE QUIZ TAB ══════════════════════ -->
+<div id="tab-create" class="tab-panel active">
+
+  <div class="steps-nav">
+    <div class="step-dot active" data-step="upload">1 · Upload</div>
+    <div class="step-dot" data-step="configure">2 · Configure</div>
+    <div class="step-dot" data-step="generate">3 · Generate</div>
+    <div class="step-dot" data-step="review">4 · Review &amp; Save</div>
+  </div>
+
+  <div class="error-banner" id="error-banner"></div>
+  <div class="resume-banner" id="resume-banner" style="display:none">
+    <span>A previous draft was found in this browser.</span>
+    <button class="btn-small" onclick="resumeDraft()">Resume</button>
+    <button class="btn-small btn-ghost" onclick="discardDraft()">Discard</button>
+  </div>
+
+  <!-- STEP 1: Upload -->
+  <section class="card step" id="step-upload">
+    <div class="section-title">Upload a Document</div>
+    <label>Document <span class="badge">txt · pdf · docx · xlsx · pptx</span></label>
+    <div class="file-area" onclick="document.getElementById('doc-input').click()">
+      <button class="file-btn" type="button">Choose file</button>
+      <span class="file-name" id="doc-name">No file chosen</span>
+      <input type="file" id="doc-input" accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.pptx,.ppt" onchange="onFileChosen()">
+    </div>
+    <div class="status-msg" id="upload-status"></div>
+    <button class="btn-primary" id="upload-next-btn" onclick="goToStep('configure')" disabled>Next: Configure Quiz →</button>
+  </section>
+
+  <!-- STEP 2: Configure -->
+  <section class="card step" id="step-configure" style="display:none">
+    <div class="section-title">Category</div>
+    <label>Select or create a category</label>
+    <div class="input-row">
+      <div><select id="category-select" onchange="checkConfigureReady()"><option value="">— choose category —</option></select></div>
+      <div style="flex:0"><button class="btn-secondary" onclick="loadCategories()">↻</button></div>
+    </div>
+    <div class="input-row" style="margin-top:.6rem">
+      <div><input type="text" id="new-category-name" placeholder="Or type a new category name…"></div>
+      <div style="flex:0"><button class="btn-secondary" onclick="createCategory()">Create</button></div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.6rem">Question Types &amp; Count</div>
+    <label>Total number of questions</label>
+    <input type="number" id="total-count" min="1" max="100" value="10" oninput="renderSplitPreview(); checkConfigureReady()">
+
+    <label style="margin-top:1rem">Question types (select at least one — count splits across all selected)</label>
+    <div id="type-checkboxes" class="type-grid"></div>
+
+    <div class="split-preview" id="split-preview"></div>
+
+    <div class="section-title" style="margin-top:1.6rem">Model</div>
+    <label>Ollama Model <span class="cloud-tag">local daemon</span></label>
+    <div class="input-row">
+      <div><select id="model-select" onchange="checkConfigureReady()"><option value="">— click Load Models —</option></select></div>
+      <div style="flex:0"><button class="btn-secondary" onclick="loadModels()">↻ Load Models</button></div>
+    </div>
+    <label class="checkbox-row"><input type="checkbox" id="show-all-models" onchange="renderModelOptions()"> Show local (non-cloud) models too</label>
+
+    <div class="button-row">
+      <button class="btn-ghost" onclick="goToStep('upload')">← Back</button>
+      <button class="btn-primary" id="generate-btn" onclick="startGeneration()" disabled>Generate Questions →</button>
+    </div>
+  </section>
+
+  <!-- STEP 3: Generate -->
+  <section class="card step" id="step-generate" style="display:none">
+    <div class="section-title">Generating…</div>
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    <div class="status-msg" id="generate-status"></div>
+    <pre class="log" id="generate-log"></pre>
+  </section>
+
+  <!-- STEP 4: Review & Save -->
+  <section class="card step" id="step-review" style="display:none">
+    <div class="result-header">
+      <div class="section-title" style="border:none;margin:0;padding:0">Review &amp; Edit</div>
+      <span class="meta" id="review-meta"></span>
+    </div>
+    <div class="warning-banner" id="warning-banner" style="display:none"></div>
+    <div id="question-list"></div>
+    <div class="button-row">
+      <button class="btn-ghost" onclick="goToStep('configure')">← Back to Configure</button>
+      <button class="btn-primary" onclick="saveQuiz()">💾 Save to Database</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══════════════════════ SAVED QUIZZES TAB ══════════════════════ -->
+<div id="tab-saved" class="tab-panel">
+  <section class="card">
+    <div class="section-title">Saved Quizzes</div>
+    <div class="input-row">
+      <div><select id="saved-category-filter" onchange="loadSavedQuizzes()"><option value="">All categories</option></select></div>
+      <div style="flex:0"><button class="btn-secondary" onclick="loadSavedQuizzes()">↻ Refresh</button></div>
+    </div>
+    <div id="saved-quiz-list"></div>
+  </section>
+  <section class="card" id="saved-quiz-detail" style="display:none">
+    <div class="result-header">
+      <div class="section-title" style="border:none;margin:0;padding:0" id="saved-detail-title"></div>
+      <div style="display:flex;gap:.5rem">
+        <button class="btn-small btn-primary" id="take-quiz-btn" onclick="startTakeQuiz()">▶ Take Quiz</button>
+        <button class="btn-small btn-ghost" onclick="closeSavedDetail()">✕ Close</button>
+      </div>
+    </div>
+    <div class="meta" id="saved-detail-meta"></div>
+    <div id="saved-detail-questions"></div>
+    <div class="section-title" style="margin-top:1.4rem">Past Attempts</div>
+    <div id="past-attempts-list"><div class="empty-note">No attempts yet.</div></div>
+  </section>
+</div>
+
+<!-- ══════════════════════ QUIZ ATTEMPT PAGE ══════════════════════ -->
+<div id="quiz-attempt-page">
+
+  <!-- ── Take Quiz (one question at a time) ── -->
+  <section class="card" id="take-quiz-panel">
+    <div class="result-header">
+      <div class="section-title" style="border:none;margin:0;padding:0" id="take-quiz-title"></div>
+      <span class="meta" id="take-quiz-progress"></span>
+    </div>
+    <div class="progress-bar-track" style="margin-bottom:1.4rem"><div class="progress-bar-fill" id="take-quiz-progress-fill"></div></div>
+    <div id="take-quiz-questions"></div>
+    <div class="button-row">
+      <button class="btn-ghost" onclick="cancelTakeQuiz()">← Cancel</button>
+      <button class="btn-primary" id="take-quiz-next-btn" onclick="handleTakeQuizNext()" disabled>Next →</button>
+    </div>
+  </section>
+
+  <!-- ── Attempt Results ── -->
+  <section class="card" id="attempt-results-panel" style="display:none">
+    <div class="result-header">
+      <div class="section-title" style="border:none;margin:0;padding:0">Results</div>
+      <button class="btn-small btn-ghost" onclick="closeAttemptResults()">✕ Close</button>
+    </div>
+    <div class="score-banner" id="score-banner"></div>
+    <div id="attempt-results-list"></div>
+    <div class="button-row" id="finalize-row" style="display:none">
+      <span></span>
+      <button class="btn-primary" onclick="finalizeSelfGrade()">Finalize Score</button>
+    </div>
+  </section>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
