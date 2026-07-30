@@ -15,6 +15,11 @@ from pathlib import Path
 from string import Template
 
 import config
+from langfuse import Langfuse
+
+# Initialize client
+langfuse = Langfuse()
+
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 
@@ -22,10 +27,11 @@ _SCHEMA_RE = re.compile(r"<!-- SCHEMA START -->\s*(.*?)\s*<!-- SCHEMA END -->", 
 
 
 def load_template(name: str) -> str:
-    """Read prompts/<name>.txt verbatim (no substitution)."""
-    path = PROMPTS_DIR / f"{name}.txt"
-    return path.read_text(encoding="utf-8")
-
+    # """Read prompts/<name>.txt verbatim (no substitution)."""
+    # path = PROMPTS_DIR / f"{name}.txt"
+    # return path.read_text(encoding="utf-8")
+    prompt_obj = langfuse.get_prompt(f"QuestClash/{name}")
+    return prompt_obj.get_langchain_prompt()
 
 def render(name: str, **kwargs) -> str:
     """Load prompts/<name>.txt and substitute $-placeholders from kwargs."""
