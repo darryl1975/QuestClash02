@@ -1,7 +1,7 @@
 """Thin async HTTP client for the Ollama chat API (local daemon or Ollama Cloud).
 
 Only two operations are needed by this app: list_models (populate the model
-picker) and chat (generate one batch of quiz questions, see generator.py).
+picker) and chat (generate one batch of quiz questions, see agents.py).
 Both raise HTTPException directly on auth/model errors so callers can let
 FastAPI turn them straight into an API response.
 """
@@ -85,7 +85,7 @@ async def chat(
     format: str | None = "json",
 ) -> ChatResult:
     """One non-streaming chat completion. format="json" tells Ollama to
-    constrain output to valid JSON — still just a hint, so generator.py
+    constrain output to valid JSON — still just a hint, so the calling agent
     parses/validates the response defensively rather than trusting it."""
     payload = {"model": model, "messages": messages, "stream": False}
     if format:

@@ -2,9 +2,9 @@
 
 Every route here is a thin wrapper: request bodies are validated by the
 pydantic models in schemas.py, real work is delegated to the other modules
-(extractors for uploads, generator for LLM-driven quiz generation, db for
-persistence), and errors are translated into HTTPExceptions. Run via
-start.sh (uvicorn), not this file directly.
+(extractors for uploads, the orchestrator + its agents for LLM-driven quiz
+generation, db for persistence), and errors are translated into
+HTTPExceptions. Run via start.sh (uvicorn), not this file directly.
 """
 import asyncio
 import json
@@ -17,9 +17,9 @@ from fastapi.staticfiles import StaticFiles
 import config
 import db
 import extractors
-import generator
 import observability
 import ollama_client
+from orchestrator import default_orchestrator
 from schemas import (
     CategoryCreate,
     GenerateRequest,
@@ -130,19 +130,31 @@ async def create_category(payload: CategoryCreate):
         raise HTTPException(status_code=503, detail=f"Database error: {e}")
 
 
+# ── Generation agents ────────────────────────────────────────────────────────
+
+
+@app.get("/api/agents")
+async def get_agents():
+    """Expose the orchestrator's agent registry: one card per question-type
+    agent, describing what it does and which question type(s) it handles."""
+    return {"agents": default_orchestrator.list_agent_cards()}
+
+
 # ── Generation (streaming) ──────────────────────────────────────────────────
 
 
 @app.post("/api/generate")
 async def generate_quiz(req: GenerateRequest):
     """Kick off quiz generation and stream progress back as newline-delimited
-    JSON (see generator.run_generation for the event types: plan, attempt,
-    type_done, warning, error, done).
+    JSON (see orchestrator.Orchestrator.run_generation for the event types:
+    plan, attempt, type_done, warning, error, done).
 
     Generation runs in a background task that pushes events onto a queue;
     the response generator just drains the queue and yields each event as
     one JSON line, so the client sees progress as it happens rather than
-    waiting for the whole batch to finish.
+    waiting for the whole batch to finish. The orchestrator dispatches each
+    selected question type to the agent whose AgentCard advertises support
+    for it (see orchestrator.py, agents.py).
     """
     try:
         req.validate_types()
@@ -157,7 +169,7 @@ async def generate_quiz(req: GenerateRequest):
 
     async def worker():
         try:
-            await generator.run_generation(
+            await default_orchestrator.run_generation(
                 source_text=req.source_text,
                 category=req.category,
                 model=req.model,

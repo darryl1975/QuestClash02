@@ -52,7 +52,7 @@ def extract_schema_block(question_type: str) -> str:
 
 def build_messages(question_type: str, *, source_text: str, category: str, count: int) -> list[dict]:
     """Build the initial system+user chat messages sent to the model for one
-    question-type batch (see generator.generate_for_type)."""
+    question-type batch (see agents.QuestionGenerationAgent.run)."""
     system_content = render("system_instructions", category=category)
     user_content = render(
         question_type,

@@ -1,11 +1,12 @@
 """Structural validation of raw model output, one validator per question type.
 
-generator.py calls VALIDATORS[question_type](parsed_json, expected_count,
-seen_texts) after parsing the model's JSON response. Each validator returns
-a ValidationResult: items that pass every check for that type end up in
+Each QuestionGenerationAgent (see agents.py) calls
+VALIDATORS[question_type](parsed_json, expected_count, seen_texts) after
+parsing the model's JSON response. Each validator returns a
+ValidationResult: items that pass every check for that type end up in
 valid_items (already reshaped into the {question_type, question_text, data,
 correct_answer, explanation} form the DB expects); anything else produces a
-human-readable string in errors, which generator.py feeds back to the model
+human-readable string in errors, which the agent feeds back to the model
 as a corrective retry prompt (see prompts.build_corrective_message).
 
 seen_texts carries question texts (normalized) already accepted earlier in
