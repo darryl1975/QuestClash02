@@ -1,0 +1,431 @@
+{
+  "dataset_name": "mgf-agentic-ai-quiz-questions",
+  "dataset_description": "Question-generation test cases sourced from IMDA's 'Model AI Governance Framework for Agentic AI' (v1.5, published 20 May 2026, updated 5 June 2026). Each item is one QuestionGenerationAgent.run() call (source_text, category, qtype, count) plus a ground-truth fact list for grading answer_correctness independently of the LLM judge.",
+  "items": [
+    {
+      "id": "mgf-01",
+      "topic": "What is Agentic AI - core components",
+      "question_type": "multiple_choice",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "There is no consensus on what defines an AI agent, but agents usually possess some degree of independent planning, decision-making, and action-taking over multiple steps to achieve a user-defined goal. Agentic AI systems are software systems consisting of one or multiple AI agents that may operate individually or collaboratively. Agents built on generative AI models use a small, large, or multimodal large language model (SLM, LLM, or MLLM) as their 'brain' to make decisions and complete tasks. A simple agent has three core components: (1) Model - the SLM, LLM or MLLM that serves as the central reasoning and planning engine; (2) Instructions - natural language commands that define an agent's role, capabilities, and behavioural constraints, such as a system prompt; and (3) Memory - information stored and accessible to the LLM, in short- or long-term storage, sometimes used to obtain information from previous user interactions or external knowledge sources. In addition, agents have components enabling more complex tasks: (4) Planning and reasoning, which lets the model output a series of steps for a task; and (5) Tools, which enable the agent to take actions and interact with other systems such as writing to files and databases. Agents also usually have components for safe and reliable performance: (7) Controls, including access controls, guardrails, and human approvals, which limit the agent's action-space and autonomy; and (8) Logging and monitoring, which records agent actions, decisions, and interactions to enable monitoring, debugging, and accountability.",
+      "expected_facts": [
+        "A simple agent has three core components: Model, Instructions, and Memory.",
+        "Agents built on generative AI models use an SLM, LLM, or MLLM as their 'brain'.",
+        "Controls (access controls, guardrails, human approvals) limit an agent's action-space and autonomy.",
+        "Logging and monitoring records agent actions, decisions, and interactions for monitoring, debugging, and accountability."
+      ],
+      "metadata": {"source_pages": "6-7", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-02",
+      "topic": "Tools, protocols, and controls",
+      "question_type": "true_false",
+      "category": "Agentic AI Governance",
+      "count": 5,
+      "source_text": "Tools enable an agent to take actions and interact with other systems, such as writing to files and databases, controlling devices, or performing transactions; the model calls tools to complete a task, and agents themselves can also be called as tools, e.g. one supervisor agent invokes another specialist agent for a certain task. Protocols are standardised ways for agents to communicate with tools and other agents. The Model Context Protocol (MCP) has been developed for agents to communicate with tools, whereas the Agent2Agent Protocol (A2A) defines a standard for agents to communicate with each other. Controls most relevant to agents include: Access controls, which limit what an agent is allowed to see, use or change, including restricting access to sensitive data, tools and systems; Guardrails, which monitor and constrain an agent's behaviour before, during or after it acts, helping detect unsafe instructions, policy violations, or actions inconsistent with user intent; and Human approvals, which are requirements for a human to review or approve agent actions.",
+      "expected_facts": [
+        "MCP is for agents to communicate with tools; A2A is for agents to communicate with each other.",
+        "Agents themselves can be called as tools, e.g. a supervisor agent invoking a specialist agent.",
+        "Access controls, guardrails, and human approvals are the three types of controls most relevant to agents.",
+        "Guardrails can act before, during, or after an agent acts."
+      ],
+      "metadata": {"source_pages": "7", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-03",
+      "topic": "Multi-agent design patterns",
+      "question_type": "multiple_select",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "In an agentic system, it is common for multiple agents to be set up to work together, allowing each agent to specialise in a certain function or task and/or work in parallel. Three simple design patterns for multi-agent systems are: Sequential, where agents work one after another in a linear or otherwise structured workflow (e.g. a graph), with each agent's output becoming the next agent's input; Supervisor, where one supervising agent coordinates specialised agents under it, calling specific agents as tools when required; and Swarm, where agents work at the same time, handing off to another agent when needed. There is no universally correct architecture for a multi-agent setup, and the task at hand can require different or hybrid patterns. A well-defined task with a step-by-step workflow can lend itself to a sequential architecture, whereas a more open-ended task that requires brainstorming or pursuing different lines of inquiry may benefit from a swarm architecture.",
+      "expected_facts": [
+        "The three simple multi-agent design patterns are Sequential, Supervisor, and Swarm.",
+        "In a Sequential pattern, each agent's output becomes the next agent's input.",
+        "In a Supervisor pattern, one supervising agent calls specialised agents as tools.",
+        "A well-defined, step-by-step task suits a sequential architecture; an open-ended brainstorming task suits a swarm architecture."
+      ],
+      "metadata": {"source_pages": "8", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-04",
+      "topic": "Action-space vs autonomy",
+      "question_type": "short_answer",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "It is generally helpful to distinguish between two concepts when considering what an agent can do: Action-space (or authority, capabilities) is the range of actions the agent can take, including transactions it can execute, determined by the tools it is allowed to use and permissions on those tools. Autonomy (or decision-making) is the degree to which an agent can decide how to act towards a goal, such as by defining the steps to be taken, determined by its instructions and level of human involvement. An agent's action-space mainly depends on the tools it has access to, such as whether it can only access sandboxes, internal systems, or external systems, and whether it has read-only or write access. An agent's autonomy mainly depends on its instructions (e.g. following a detailed SOP versus using its own judgment) and the level of human involvement, which can range from 'agent proposes, human operates' to 'agent operates, human observes'.",
+      "expected_facts": [
+        "Action-space is the range of actions an agent can take, determined by tools and permissions.",
+        "Autonomy is the degree to which an agent can decide how to act, determined by instructions and human involvement.",
+        "Action-space depends on systems accessible (sandbox/internal/external) and read vs write access."
+      ],
+      "metadata": {"source_pages": "8-9", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-05",
+      "topic": "Levels of human involvement",
+      "question_type": "ordering",
+      "category": "Agentic AI Governance",
+      "count": 1,
+      "source_text": "When interacting with an agent, a human can be involved to different levels. 'Agent proposes, human operates': the human reviews and approves every agent action. 'Agent and human collaborate': the human and agent work together, with the agent requiring human approval at significant steps such as before writing to a database or making a payment, though the human can intervene anytime. 'Agent operates, human approves': the agent requires human approval only at critical steps or failures, such as deleting a database or making a payment above a predefined amount. 'Agent operates, human observes': the agent does not require human approval as it completes its task, though its actions may be audited after the fact.",
+      "expected_facts": [
+        "The four levels of human involvement, from most to least human control, are: Agent proposes human operates; Agent and human collaborate; Agent operates human approves; Agent operates human observes."
+      ],
+      "metadata": {"source_pages": "9-10", "provenance": "manual", "edge_case": "short_source_single_question_ordering"}
+    },
+    {
+      "id": "mgf-06",
+      "topic": "Sources of risk",
+      "question_type": "yes_no",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "The new components of an agent constitute new sources of risk, though the risks themselves are familiar: agents inherit traditional software vulnerabilities (such as SQL injection) and LLM-specific risks (such as hallucination, bias, data leakage and adversarial prompt injections). However, risks can manifest differently through different components. For planning and reasoning, an agent can, due to hallucination or semantic misalignment, create a plan that cannot achieve the requested task, contradicts the user's intent, or drifts from an earlier plan. For tools, an agent can hallucinate and call non-existent tools, call the wrong tools, call the right tools with the wrong input, or call tools in a biased manner; prompt or code injections can also manipulate the agent to exfiltrate or manipulate data it has access to. For protocols, as new protocols emerge to handle agent communication, they can be poorly deployed or compromised, e.g. deploying an untrusted MCP server that contains code to exfiltrate the user's data.",
+      "expected_facts": [
+        "Agents inherit traditional software vulnerabilities (e.g. SQL injection) and LLM-specific risks (e.g. hallucination, bias, data leakage, prompt injection).",
+        "An agent can hallucinate and call non-existent tools, or call the right tool with the wrong input.",
+        "A malicious/untrusted MCP server is an example risk from the protocols component."
+      ],
+      "metadata": {"source_pages": "10", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-07",
+      "topic": "Types of risk",
+      "question_type": "fill_blank",
+      "category": "Agentic AI Governance",
+      "count": 5,
+      "source_text": "Because agents take actions in the real world, when they malfunction it can lead to harmful real-world impact. Organisations should be aware of five negative outcomes: Erroneous actions, such as an agent fixing appointments on the wrong date or producing flawed code; Unauthorised actions, taken outside the agent's permitted scope or authority, such as not escalating for human approval when required; Biased or unfair actions, leading to unfair outcomes especially for groups of different profiles and demographics, e.g. biased vendor selection or hiring decisions; Data breaches, involving exposure or manipulation of sensitive data, which can occur via a security breach or an agent failing to recognise data as sensitive; and Disruption to connected systems, such as deleting a production codebase or overwhelming external systems with requests.",
+      "expected_facts": [
+        "The five types of risk are: erroneous actions, unauthorised actions, biased or unfair actions, data breaches, and disruption to connected systems.",
+        "Unauthorised actions are actions taken outside an agent's permitted scope or authority.",
+        "Agents generally have greater data access than typical LLMs and can not only leak but also wrongly modify data."
+      ],
+      "metadata": {"source_pages": "11", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-08",
+      "topic": "Systemic and multi-agent risks",
+      "question_type": "multiple_choice",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "The speed and complexity of agentic systems can increase risks. Speed and volume make it difficult for oversight mechanisms to detect and prevent unauthorised actions in real-time, and requiring continuous human oversight can lead to automation bias and alert fatigue. Cascading or compounding effects mean a mistake in one step can propagate and amplify across later steps, e.g. a hallucinated inventory figure causing downstream over- or under-ordering of stock. Multi-agent systems exacerbate these risks: agent sprawl is the uncontrolled proliferation of AI agents without centralised management; collaborative failures include miscoordination (agents interpreting intent differently), conflict (agents optimising different goals coming into conflict, e.g. a customer support agent offering refunds while a revenue protection agent blocks them), and collusion (agents developing coordinated-looking behaviour without explicit instruction, e.g. pricing agents converging on higher prices); and unpredictability/emergent behaviours arise because the number of possible outcomes grows exponentially when multiple non-deterministic agents work together.",
+      "expected_facts": [
+        "Agent sprawl is the uncontrolled proliferation of AI agents without centralised management.",
+        "Collaborative failures include miscoordination, conflict, and collusion.",
+        "Continuous human oversight as a safeguard can itself lead to automation bias and alert fatigue.",
+        "A hallucinated inventory figure causing wrong stock reorders is an example of a cascading/compounding effect."
+      ],
+      "metadata": {"source_pages": "11-12", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-09",
+      "topic": "Four dimensions of the MGF for Agentic AI",
+      "question_type": "multiple_select",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "The Model AI Governance Framework (MGF) for Agentic AI builds on the responsible AI practices set out in MGF (2020) by highlighting emerging best practices for agentic AI. It outlines four dimensions: (1) Assess and bound the risks upfront, which highlights new risks to consider during risk assessment and design considerations to limit agents' potential scope of impact while ensuring traceability and controllability; (2) Make humans meaningfully accountable, which includes clearly defining responsibility across multiple actors within and outside the organisation, and ensuring human-in-the-loop remains effective despite automation bias; (3) Implement technical controls and processes, covering guardrails during development, testing before deployment, and continuous monitoring after deployment; and (4) Enable end-user responsibility, equipping end-users with information to use agents appropriately while maintaining their tradecraft and foundational skills. These four dimensions should be viewed as an iterative process: if an anomaly is detected during implementation or monitoring, organisations should re-evaluate the earlier dimensions.",
+      "expected_facts": [
+        "The four dimensions are: assess and bound the risks upfront, make humans meaningfully accountable, implement technical controls and processes, and enable end-user responsibility.",
+        "The four dimensions should be viewed as an iterative process, not a one-time sequence.",
+        "The MGF for Agentic AI builds on the original Model AI Governance Framework (2020)."
+      ],
+      "metadata": {"source_pages": "13", "provenance": "manual", "edge_case": "small_answer_pool"}
+    },
+    {
+      "id": "mgf-10",
+      "topic": "IMDA OpenClaw case study",
+      "question_type": "true_false",
+      "category": "Agentic AI Governance",
+      "count": 5,
+      "source_text": "In May 2026, IMDA released a case study on responsible deployment of OpenClaw, an open-source AI agent platform that acts as an autonomous personal assistant through chat interfaces such as Telegram and Slack, applying the four-dimension framework. OpenClaw was launched with limited security controls, and concerns include its lack of maturity and hardening, access control and authentication gaps, exposure of sensitive data, supply chain risks from third-party skills, and memory poisoning risks. Recommendations include: avoid deploying OpenClaw as-is in mission-critical environments handling sensitive data or financial transactions; avoid creating a single 'all-powerful' agent with unrestricted access, instead using multiple agents with narrow, clearly defined rules; enforce human approval through system-level controls rather than prompt-layer guardrails, which may be bypassed or 'forgotten'; review and tighten OpenClaw's permissive default configurations; test and verify that safety controls and human-in-the-loop work as intended before deployment; and ensure all agent actions are logged and attributable after deployment, avoiding leaving the agent unsupervised for extended periods.",
+      "expected_facts": [
+        "OpenClaw is an open-source AI agent platform used as an autonomous personal assistant via chat interfaces like Telegram and Slack.",
+        "Recommendations include avoiding a single 'all-powerful' agent with unrestricted access.",
+        "System-level controls are recommended over prompt-layer guardrails because prompt-layer guardrails may be bypassed or 'forgotten'.",
+        "OpenClaw's concerns include memory poisoning risks and supply chain risks from third-party skills."
+      ],
+      "metadata": {"source_pages": "14", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-11",
+      "topic": "Risk factors affecting impact",
+      "question_type": "short_answer",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "When determining whether an agentic use case is suitable for deployment, risk is a function of likelihood and impact. Factors affecting impact include: Domain and use case, i.e. the level of error tolerance in the domain (e.g. an agent executing financial transactions has larger negative impact if wrong, versus an agent summarising internal meetings); Agent's access to sensitive data, where risk increases if the agent has persistent memory and can store sensitive data across sessions; Agent's access to external systems, e.g. an agent sending data to third-party APIs can leak data or disrupt those systems; Scope of agent's actions, distinguishing read vs write access and a narrow vs wide range of actions; and Reversibility of agent's actions, e.g. an agent that schedules meetings can easily reschedule them, versus an agent that sends email communications to external parties, which is harder to undo.",
+      "expected_facts": [
+        "Risk is a function of likelihood (probability) and impact (severity).",
+        "The five factors affecting impact are: domain/use case, access to sensitive data, access to external systems, scope of actions, and reversibility of actions.",
+        "Sending external email is a harder-to-reverse action than rescheduling a meeting."
+      ],
+      "metadata": {"source_pages": "15-16", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-12",
+      "topic": "Risk factors affecting likelihood and threat modelling",
+      "question_type": "fill_blank",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "Factors affecting the likelihood of a risk manifesting include: Agent's level of autonomy, where higher autonomy increases unpredictability; Task complexity, where more steps and analysis increase unpredictability; Agent's access to external systems, where higher exposure increases vulnerability to prompt injections and cyberattacks; Agent being provided or operated by an external party, where limited visibility and control increases risk; and System complexity, e.g. multiple interacting agents with feedback loops versus a single sequential agent. Threat modelling makes risk assessment more rigorous by systematically identifying specific ways an attacker may compromise the system. Common security threats to agentic systems include memory poisoning, tool misuse, and privilege compromise. Taint tracing is a method used to map out all workflows and interactions to track how untrusted data can move through a complex agentic system.",
+      "expected_facts": [
+        "The five factors affecting likelihood are: autonomy, task complexity, access to external systems, external-party-operated agents, and system complexity.",
+        "Common security threats to agentic systems include memory poisoning, tool misuse, and privilege compromise.",
+        "Taint tracing is used to track how untrusted data moves through a complex agentic system."
+      ],
+      "metadata": {"source_pages": "16-17", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-13",
+      "topic": "Dayos tiering case study",
+      "question_type": "multiple_choice",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "Dayos, a Singapore-headquartered enterprise AI automation company, replaced its ServiceNow instance with an AI-powered IT ticketing agent built on its Hero platform, reducing legacy licensing costs by $121,000 annually. Before going live, Dayos ran a structured risk assessment scoring every ticket type against severity of impact, reversibility, and feasibility of human oversight, sorting tickets into three tiers. Tier 1 (60% of tickets, low severity, fully reversible, e.g. password resets) is fully automated using a propose-confirm loop with no human engineer in the loop, but with biweekly audits of reasoning chains. Tier 2 (30% of tickets, moderate severity, partially reversible, e.g. chart of accounts updates) has the agent diagnose using a multi-step ReACT strategy, but a qualified engineer must review and sign off before execution. Tier 3 (10% of tickets, high severity, limited reversibility, e.g. production deployments and security changes) is not touched by the agent at all, as these actions carry too much risk for autonomous execution at the current maturity of agentic AI.",
+      "expected_facts": [
+        "Dayos scored tickets against severity of impact, reversibility, and feasibility of human oversight.",
+        "Tier 1 (60% of tickets) is fully automated with no human engineer in the loop, but has biweekly audits.",
+        "Tier 3 (10% of tickets, e.g. production deployments) is not touched by the agent at all.",
+        "The Tier 2 agent uses a ReACT (multi-step diagnostic) strategy but requires human sign-off before execution."
+      ],
+      "metadata": {"source_pages": "18", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-14",
+      "topic": "Bounding risks through design (agent limits)",
+      "question_type": "yes_no",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "Having selected an appropriate agent use case, organisations can further bound risks by defining limits on: the agent's access to tools and systems, using least-privilege policies that give agents only the minimum tools and data access needed; the agent's autonomy, using SOPs and protocols for process-driven tasks rather than letting the agent define every workflow step; and the agent's area of impact, using mechanisms like self-contained environments with limited network and data access, particularly for high-risk tasks such as code execution. In general, organisations should prefer deterministic rather than non-deterministic limits and bound by design, e.g. imposing access controls that prevent a tool from being called at all, rather than relying on prompts to instruct the agent against using it. Where limits are non-deterministic or less reliable, organisations should layer on more monitoring or incorporate human-in-the-loop review.",
+      "expected_facts": [
+        "Organisations should define limits on the agent's tool/system access, autonomy, and area of impact.",
+        "Deterministic limits (e.g. hard access controls) are preferred over non-deterministic limits (e.g. prompt instructions).",
+        "Structuring agents around functional boundaries can act as a natural constraint on tool access."
+      ],
+      "metadata": {"source_pages": "19", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-15",
+      "topic": "OCBC Bank of Singapore case study",
+      "question_type": "ordering",
+      "category": "Agentic AI Governance",
+      "count": 1,
+      "source_text": "OCBC, the longest-established Singapore bank, developed an agentic AI system to support its Bank of Singapore private banking Relationship Manager and compliance team in synthesising customer-provided financial documents (tax submissions, corporate annual reports, property documents, dividend statements) into a structured Source of Wealth memo, aiming to improve consistency and completeness while reducing manual effort. The system provides decision support only and does not make credit, onboarding or risk decisions autonomously; final validation and approval remain with designated human reviewers. Risk is bounded through design via: task-level autonomy only, where agents perform narrowly scoped tasks such as extraction, drafting, and checking rather than end-to-end decisions; no self-initiation of actions, where agents operate only when triggered by predefined workflows; and no decision authority, with human review at critical decision points and outputs remaining advisory and subject to human validation.",
+      "expected_facts": [
+        "The OCBC Source of Wealth agentic workflow bounds risk via task-level autonomy only, no self-initiation of actions, and no decision authority.",
+        "The system provides decision support only; final validation and approval remain with human reviewers.",
+        "Agent tasks in this workflow include document extraction, drafting, and checking, with human-in-the-loop review before final human approval."
+      ],
+      "metadata": {"source_pages": "20", "provenance": "manual", "edge_case": "narrow_workflow_ordering"}
+    },
+    {
+      "id": "mgf-16",
+      "topic": "MSD tiered autonomy levels",
+      "question_type": "multiple_select",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "MSD, a pharmaceutical company using agents for tasks like clinical documentation and trial protocol production, implemented an enterprise agentic AI governance strategy with multiple risk-calibrated governance pathways based on five levels of agency (L0 to L5): No Agency, Assisted Agency, Supervised Agency, Conditional Agency, Advanced Agency, and Full Agency, accounting for dimensions such as action scope, permission scope (from read-only to full access), autonomy (from reactive to self-directed), goal complexity, human oversight (from continuous to exception-only), risk impact, and data/context scope. Lower levels move quickly through a lightweight governance pathway; middle levels move through an established AI impact assessment process; and higher levels require escalation to enterprise architecture review and testing. The highest levels of agency require a programmatic runtime policy enforcement layer at the AI gateway before higher autonomy is enabled.",
+      "expected_facts": [
+        "MSD's Agentic System Level Matrix has six levels of agency from L0 (No Agency) to L5 (Full Agency).",
+        "Higher levels of agency require escalation to enterprise architecture review and a runtime policy enforcement layer at the AI gateway.",
+        "Permission scope in the matrix ranges from read-only to full access as agency level increases."
+      ],
+      "metadata": {"source_pages": "21", "provenance": "manual", "edge_case": "small_answer_pool"}
+    },
+    {
+      "id": "mgf-17",
+      "topic": "Agent identity best practices",
+      "question_type": "short_answer",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "Identity management and access control are key to enabling traceability and accountability. As organisations deploy more agents, identity management needs to be extended to agents, though this is an evolving space with gaps: current authorisation systems typically have pre-defined, static scopes, while agents require fine-grained permissions that may change dynamically; current authentication systems are typically based on a single unique individual, which struggles with agents acting for multiple human users or spinning up recursive sub-agents. In the interim, organisations should ensure an agent's identity is: unique and cryptographically verifiable; accounted for, tied to a supervising agent, human user, or organisational department; differentiated according to the capacity in which it acts; and catalogued and centrally managed to prevent agent sprawl. An agent's authorisation should be scoped, least-privilege, non-transferable, time- or session-bound, and bounded by the authorising human's own permissions - a human should not be able to grant an agent permissions greater than the human's own.",
+      "expected_facts": [
+        "An agent's identity should be unique, accounted for, differentiated by capacity, and catalogued/centrally managed.",
+        "A human user should not be able to set permissions for an agent greater than what the human user is themselves authorised to do.",
+        "Agent authorisation should be scoped, least-privilege, non-transferable, and time- or session-bound."
+      ],
+      "metadata": {"source_pages": "23-24", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-18",
+      "topic": "Agentic AI value chain and internal roles",
+      "question_type": "multiple_choice",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "The simplified agentic AI value chain runs from model developers and tooling providers (e.g. MCP, APIs), to platform providers, to system providers / app developers, to deployers, to end users. An organisation may play multiple overlapping roles, e.g. one that develops and deploys its own agents is both system provider and deployer. Within an organisation, responsibilities can be allocated across teams: Key decision makers (e.g. board members, C-suite) set high-level goals, define permitted use cases, and set the overall governance approach; Product teams (e.g. Product Managers, AI Engineers) define agent design and requirements and implement development, testing, and monitoring; Cybersecurity teams define baseline security guardrails and conduct regular red teaming and threat modelling; and Users utilise agent outputs and are responsible for ethical usage, attending training, and timely reporting of bugs or issues.",
+      "expected_facts": [
+        "The value chain runs from model/tooling providers, to platform providers, to system providers/app developers, to deployer, to end users.",
+        "Key decision makers set high-level goals and the overall governance approach for agent use.",
+        "Cybersecurity teams are responsible for defining baseline security guardrails and conducting red teaming."
+      ],
+      "metadata": {"source_pages": "25-26", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-19",
+      "topic": "PwC Singapore report-drafting accountability case study",
+      "question_type": "true_false",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "PwC Singapore's AI Factory developed an agentic application automating the drafting of research and analysis sections for internal reports, using three coordinated agents (Planner, Researcher, Summariser) in a sequential workflow with feedback loops, followed by human review before use. Operating accountability is allocated as follows: the Use case owner confirms the use case serves a legitimate business need and remains accountable for responsible use and human oversight; the Technology Risk Management Team supports risk, security, and compliance assessment, including access rights and connected knowledge bases; AI Factory designs, develops, and maintains the application including prompt design, model selection, and guardrails, and manages model-change updates through standard change management; and End users / subject matter specialists review AI-generated content before use, treating it as a first draft to support rather than replace professional judgement.",
+      "expected_facts": [
+        "PwC's report-drafting system uses three coordinated agents: Planner, Researcher, and Summariser, in a sequential workflow.",
+        "AI Factory manages model-change updates through standard change management processes, rather than leaving it to end users.",
+        "AI-generated content is treated as a first draft intended to support, not replace, professional judgement."
+      ],
+      "metadata": {"source_pages": "27", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-20",
+      "topic": "Design for meaningful human oversight",
+      "question_type": "fill_blank",
+      "category": "Agentic AI Governance",
+      "count": 5,
+      "source_text": "Organisations should define significant checkpoints or action boundaries requiring human approval, especially before: high-stakes actions and decisions (e.g. editing sensitive data, high-risk domain decisions); irreversible actions (e.g. permanently deleting data, making payments); outlier or atypical behaviour (e.g. an agent accessing a system outside its work scope); and user-defined boundaries (e.g. requiring approval for purchases above a certain amount). Approval requests should be kept contextual and digestible while making risk clear, rather than providing long raw logs. The form of human input required should vary by complexity: simple approve/reject for straightforward actions, editing the plan for complex cases, or a written justification for high-risk actions. Organisations should also audit the effectiveness of human oversight by tracking indicators such as human override rate (a low rate may signal rubber-stamping) and human response times (a shorter time may signal automation bias or review fatigue).",
+      "expected_facts": [
+        "Checkpoints requiring human approval should be defined for high-stakes, irreversible, outlier/atypical, and user-defined actions.",
+        "A low human override rate may signal rubber-stamping behaviour.",
+        "Shorter human response times during review may signal automation bias or review fatigue."
+      ],
+      "metadata": {"source_pages": "29", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-21",
+      "topic": "Tencent CodeBuddy human oversight case study",
+      "question_type": "multiple_choice",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "Tencent's CodeBuddy is an agentic AI coding system with access to filesystems, terminal commands, external APIs, and MCP tools, used by its engineers. CodeBuddy uses preset secure defaults with configurable permissions: Read actions (reading files, directory listings) require no approval; Edit actions (modifying files) require approval valid only for that session; Bash (shell command execution) requires approval that is permanent per project or command; and MCP (external tool invocation) is governed through allow/ask/deny rules with trust verification for newly connected servers. When complex bash commands are proposed, CodeBuddy provides plain-language explanations of side effects to help users approve effectively. It also performs continuous real-time monitoring for command injections: even a previously whitelisted command pattern will require fresh human approval if a later, similar-looking command appears suspicious or materially riskier.",
+      "expected_facts": [
+        "In CodeBuddy, Read actions require no approval, while Edit, Bash, and MCP actions require approval.",
+        "Edit approvals in CodeBuddy are valid only for that session; Bash approvals are permanent per project or command.",
+        "CodeBuddy requires fresh human approval for a previously whitelisted command pattern if a similar command appears materially riskier."
+      ],
+      "metadata": {"source_pages": "30-31", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-22",
+      "topic": "X0PA recruitment human approvals case study",
+      "question_type": "yes_no",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "X0PA's AI Agentic Platform applies agentic AI to recruitment workflows, with the goal of augmenting rather than replacing human decision-making in this high-impact domain. Human checkpoints are maintained at key stages: Shortlisting, where a human reviews, approves, modifies, or rejects the AI recommendation, and Final Decision, where a human reviews scores and insights before selecting or rejecting a candidate. To enable effective user approval, the system provides explainable outputs (matching scores and ranking rationale) and training so users understand the system's limitations and failure modes, such as misinterpreting non-standard career paths or producing lower-confidence evaluations for candidates with limited structured data. Users can also override recommendations and provide feedback, creating an interaction loop used to refine system performance over time.",
+      "expected_facts": [
+        "X0PA maintains human checkpoints at Shortlisting and Final Decision stages of recruitment.",
+        "X0PA provides explainable outputs, including matching scores and ranking rationale, to enable effective human review.",
+        "Users can override X0PA's recommendations and provide feedback used to refine the system over time."
+      ],
+      "metadata": {"source_pages": "32", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-23",
+      "topic": "Technical controls - structural vs prompt-layer",
+      "question_type": "short_answer",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "When selecting suitable controls for agents, organisations should generally prefer structural, rule-based controls that operate at a system level through predefined logic, especially for higher-risk actions, over prompt-layer safeguards, which tend to be inconsistently defined across users and can be bypassed. For example, rather than instructing an agent not to use specific tools, access controls can be implemented at the tool layer to prevent those tools from being called at all. However, in cases where risks are harder to define through fixed rules, model-based safeguards can be most effective, e.g. to detect harmful content, which can manifest in different ways. Runtime controls address risks that static, design-time safeguards may miss, by monitoring and intervening during execution, such as rate limits to prevent excessive tool use or input validation to catch harmful responses before they are acted upon.",
+      "expected_facts": [
+        "Structural, rule-based controls at the system level are generally preferred over prompt-layer safeguards for higher-risk actions.",
+        "Prompt-layer safeguards tend to be inconsistently defined across users, unlike system-level safeguards.",
+        "Model-based safeguards can be most effective for risks that are hard to define through fixed rules, such as detecting harmful content."
+      ],
+      "metadata": {"source_pages": "33-34", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-24",
+      "topic": "Terminal 3 payroll agent controls",
+      "question_type": "multiple_select",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "Terminal 3, a Hong Kong-based data privacy infrastructure provider, deploys a finance payroll agent to automate its monthly payroll cycle, a high-stakes process involving sensitive personal data and financial transactions. It implemented four technical controls: defining the scope of the agent's authority within a cycle-scoped Verifiable Credential of Intent issued by the HR director, covering employee records access, contribution rates, expense thresholds, and a ceiling for the consolidated bank transfer; structurally separating sensitive data from the agent's context, so all sensitive personal data is held exclusively within a Trusted Execution Environment (TEE) and never transmitted to the agent, which only receives opaque reference identifiers; enforcing the boundaries of this authority through hardware, where every agent action is routed through the TEE and verified against credentialed parameters, with out-of-scope actions blocked before execution; and recording a tamper-proof audit trail on an Immutable Ledger for post-incident investigation.",
+      "expected_facts": [
+        "Terminal 3's payroll agent never receives sensitive personal data directly; sensitive data stays in a Trusted Execution Environment (TEE).",
+        "The HR director issues a cycle-scoped Verifiable Credential of Intent that defines the agent's authority boundaries.",
+        "All agent actions are recorded on a tamper-proof, hardware-attested Immutable Ledger."
+      ],
+      "metadata": {"source_pages": "35", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-25",
+      "topic": "Cyber Sierra TracyAI reflection architecture",
+      "question_type": "true_false",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "Cyber Sierra's TracyAI automates responses to security and compliance due diligence questionnaires by reasoning over past questionnaires, policy documents, and evidence, reducing a task that took over 100 manual hours to 15 minutes for a Hong Kong financial institution's GRC team. To reduce inaccurate output and hallucination, the team implemented a reflection architecture with two types of reflection nodes built using LangGraph: an LLM Judge-based node that critiques whether the output addresses the question, aligns with retrieved evidence, and avoids unsupported claims; and a Metrics-based node using similarity scores and RAGAS metrics like faithfulness and relevance. The agent reviews and refines its own output, and if it fails to pass both nodes within three iterations, its trajectory is terminated. The team also structured source information into a context graph of relationships between documents, policies, and certifications, enriched with metadata, to deterministically ensure only the most relevant and current (non-expired) documents were used, after observing the agent was susceptible to referencing expired document versions.",
+      "expected_facts": [
+        "TracyAI reduced a due diligence questionnaire task from over 100 manual hours to 15 minutes.",
+        "TracyAI's reflection architecture uses an LLM Judge-based node and a Metrics-based node (e.g. RAGAS metrics).",
+        "If TracyAI's output fails both reflection nodes within three iterations, its trajectory is terminated.",
+        "A context graph with metadata was used to deterministically ensure only current, non-expired documents were referenced."
+      ],
+      "metadata": {"source_pages": "36", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-26",
+      "topic": "Testing agents before deployment",
+      "question_type": "fill_blank",
+      "category": "Agentic AI Governance",
+      "count": 5,
+      "source_text": "Organisations should adapt their testing approaches for agents beyond standard software and LLM testing. Considerations include: testing for new risks such as overall task execution, policy compliance (whether the agent follows SOPs and routes for human approval when required), tool calling accuracy (right tools, right permissions, right inputs, right order), and robustness to errors and edge cases; testing entire agent workflows, not just final output, including reasoning and tool calling; testing agents individually and together at the multi-agent system level, to understand emergent risks like competitive behaviours; testing in real or realistic environments that mirror production, calibrated against the risk of prematurely giving agents access to tools that affect the real world; and testing repeatedly across varied datasets, since agent behaviour is stochastic and context-dependent, running the same inputs multiple times to check for stability.",
+      "expected_facts": [
+        "New dimensions to test for agents include overall task execution, policy compliance, tool calling accuracy, and robustness.",
+        "Testing should cover the entire agent workflow, including reasoning and tool calling, not just the final output.",
+        "Because agent behaviour is stochastic, the same inputs should be tested multiple times to check for output stability."
+      ],
+      "metadata": {"source_pages": "38", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-27",
+      "topic": "Google x Singapore Government computer-use agent testing",
+      "question_type": "multiple_choice",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "Google, CSA, GovTech and IMDA initiated a sandbox to test computer-use agents for potential public sector use cases: automated QA testing for government digital services, AI safety testing of third-party chatbots, and assisting citizens with social assistance applications. Key insights included: using realistic testing data and environments, e.g. curating safety-testing prompts based on real-world jailbreak prompts, and testing against real chatbots to review robustness in navigating different user interfaces; logging and evaluating the agent's reasoning at each step, which in the social assistance use case revealed the agent sometimes included extraneous personal details because it presumed all given information was relevant, enabling more specific prompt-layer safeguards; identifying attack vectors based on use case, e.g. testing whether a malicious third-party chatbot could redirect the agent to arbitrary URLs via indirect prompt injection; and incorporating human-in-the-loop during testing to surface unexpected or emergent behaviours, since computer-use agents have broader action-space and autonomy from their flexibility in navigating interfaces.",
+      "expected_facts": [
+        "The sandbox tested computer-use agents for automated QA testing, AI safety testing, and social assistance applications.",
+        "Logging the agent's reasoning at each step revealed it sometimes included extraneous personal details in social assistance applications.",
+        "The sandbox tested for indirect prompt injection via malicious content in third-party chatbots redirecting the agent to arbitrary URLs."
+      ],
+      "metadata": {"source_pages": "40", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-28",
+      "topic": "CDL x Knovel data access boundary testing",
+      "question_type": "ordering",
+      "category": "Agentic AI Governance",
+      "count": 1,
+      "source_text": "As part of the Global AI Assurance Sandbox, Knovel Engineering tested City Developments Limited's (CDL) internal agentic system, which retrieves business insights and performs task-oriented workflows via agent orchestration across domains such as Property, Financial, Commercial, and Hospitality. CDL identified data leakage as a key risk and prioritised testing whether data access controls and boundaries were properly enforced across users. Knovel's methodology: used a matrix of 7 user accounts by 4 domains to validate adherence to boundaries; logged into restricted-access accounts and conducted multi-turn conversations progressively introducing indirect queries targeting out-of-scope domains (e.g. a Property-domain user asking about Hotel A's Q4 revenue); compared outputs from restricted accounts against legitimately authorised ones to detect information leakage; and additionally exploited the system's tendency to be helpful by providing partially correct system prompts and tool call structures, observing whether the system inadvertently corrected or completed redacted information.",
+      "expected_facts": [
+        "Knovel used a matrix of 7 user accounts x 4 domains (Property, Financial, Commercial, Hospitality) to test CDL's agentic system.",
+        "The testing methodology involved multi-turn conversations with indirect queries targeting out-of-scope domains, then comparing outputs to detect leakage.",
+        "The system's helpfulness was also exploited by feeding it partially correct prompts to see if it completed redacted information."
+      ],
+      "metadata": {"source_pages": "41", "provenance": "manual", "edge_case": "narrow_workflow_ordering"}
+    },
+    {
+      "id": "mgf-29",
+      "topic": "GovTech phased rollout of coding assistants",
+      "question_type": "yes_no",
+      "category": "Agentic AI Governance",
+      "count": 4,
+      "source_text": "GovTech rolled out agentic coding assistants (Windsurf and GitHub Copilot Agent Mode in Oct 2025, then Claude Code in Apr 2026) using a phased approach after extensive testing on failure vectors like agentic AI manipulation, hallucination, and MCP server compromise. Phase 1 limited the blast radius: rollout to internal GovTech employees only, no MCP access allowed (only built-in multi-step reasoning capabilities), and restriction to low-risk, non-critical systems. While Phase 1 was ongoing, GovTech built infrastructure for Phase 2, including central logging and monitoring and a first iteration of an MCP Governance Framework (a path to connect to whitelisted MCP servers from a containerised sandbox), validated through red teaming. Phase 2 progressively expands the rollout to public officer developers in other agencies, then non-government vendors and contractors, with the MCP Governance Framework made accessible starting with Figma and then other managed MCPs like GitLab based on demand and risk factors.",
+      "expected_facts": [
+        "Phase 1 of GovTech's rollout was limited to internal employees, no MCP access, and low-risk systems.",
+        "GovTech built central logging/monitoring and an MCP Governance Framework during Phase 1, ahead of Phase 2.",
+        "Phase 2 progressively expands the rollout to other government agencies, then non-government vendors and contractors."
+      ],
+      "metadata": {"source_pages": "42-43", "provenance": "manual", "edge_case": null}
+    },
+    {
+      "id": "mgf-30",
+      "topic": "Continuous monitoring, change management, and end-user responsibility",
+      "question_type": "short_answer",
+      "category": "Agentic AI Governance",
+      "count": 3,
+      "source_text": "Key considerations when setting up an agent monitoring system include: monitoring on multiple layers (user-agent interaction, agent-tool invocation, model reasoning); defining alert thresholds via programmatic rules, outlier/anomaly detection, or agents monitoring other agents; defining specific interventions proportionate to risk, from scheduled review to halting execution; ensuring log immutability so problematic trajectories cannot be deleted; and establishing feedback loops back into training datasets and evaluation frameworks. As agentic systems grow more complex, robust change management is needed: organisations should define triggers for a change review process (technical, environmental, performance, or regulatory triggers) and categorise changes by risk, from lightly-reviewed prompt refinements to fully-reviewed model updates or autonomy adjustments. Finally, organisations should enable end-user responsibility by focusing on transparency for users who interact with agents (e.g. customer service agents) and layering on education and training for users who integrate agents into their work processes (e.g. coding assistants), including training on tradecraft and business continuity risks from skill degradation as agents take over entry-level tasks.",
+      "expected_facts": [
+        "Monitoring should occur on multiple layers: user-agent interaction, agent-tool invocation, and model reasoning.",
+        "Change review triggers can be technical, environmental, performance, or regulatory.",
+        "Users who interact with agents need transparency; users who integrate agents into work processes need education/training, including on tradecraft loss."
+      ],
+      "metadata": {"source_pages": "44-47", "provenance": "manual", "edge_case": null}
+    }
+  ]
+}
